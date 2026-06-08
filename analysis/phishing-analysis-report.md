@@ -51,3 +51,60 @@ This means the message failed important email security checks.
 | DMARC | Fail | The email failed domain alignment/authentication checks |
 
 These failures strongly indicate that the email may be spoofed or sent from an unauthorized source.
+
+### Urgency and Pressure Tactics
+
+The email used urgent language such as:
+
+```text
+Your account access will be suspended within 24 hours
+```
+
+This is a common phishing technique designed to pressure the recipient into acting quickly without verifying the message.
+
+### Suspicious URL
+
+The email included the following defanged URL:
+
+```text
+hxxps://micros0ft-support[.]com/login/verify-account
+```
+
+The domain does not belong to Microsoft. The URL is likely designed to steal user credentials by imitating a Microsoft login page.
+
+## Extracted IOCs
+
+| IOC Type | Value |
+|---|---|
+| Sender Email | [security-alert@micros0ft-support.com](mailto:security-alert@micros0ft-support.com) |
+| Reply-To Email | [support-verification@micros0ft-support.com](mailto:support-verification@micros0ft-support.com) |
+| Domain | micros0ft-support.com |
+| URL | hxxps://micros0ft-support[.]com/login/verify-account |
+| Sending IP | 185.199.108.153 |
+
+## Risk Assessment
+
+| Category   | Assessment     |
+| ---------- | -------------- |
+| Likelihood | High           |
+| Impact     | Medium to High |
+| Risk Level | High           |
+
+If a user entered credentials into the phishing site, the attacker could gain access to Microsoft 365 services such as Outlook, OneDrive, Teams, and SharePoint.
+
+## Recommended SOC Actions
+
+- Quarantine the email from all affected mailboxes.
+- Block the suspicious domain at the email gateway, DNS filter, or proxy.
+- Search email logs for other recipients who received the same message.
+- Check whether any users clicked the link.
+- Reset credentials for any user who interacted with the phishing page.
+- Review Microsoft 365 sign-in logs for suspicious login attempts.
+- Report the phishing domain to the relevant security team or abuse contact.
+- Educate users about lookalike domains and urgency-based phishing.
+
+## Final Verdict
+
+The email is confirmed as phishing.
+
+The main evidence includes a lookalike sender domain, failed SPF/DKIM/DMARC checks, urgency-based wording, and a suspicious credential-harvesting link.
